@@ -26,25 +26,25 @@ public class TraineeController {
 	@Autowired
 	ITraineeService service;
 
-	@GetMapping("/trainees/{traineeId}")
+	@GetMapping("/admin/trainees/{traineeId}")
 	public Trainee getTrainee(@PathVariable int traineeId) {
 		return repo.getOne(traineeId);
 	}
 	
-	@PostMapping("/trainees")
+	@PostMapping("/admin/trainees")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public TraineeDto addTrainee(@RequestBody TraineeDto traineeDto) {
 		
 		return service.addTrainee(traineeDto);
 	}
 	
-	@GetMapping("/trainees")
+	@GetMapping("/user/trainees")
 	public List<Trainee> getTrainees(){
 		return repo.findAll();
 	}
 	
 
-	@GetMapping("/trainees/name/{traineeName}")
+	@GetMapping("/public/trainees/name/{traineeName}")
 	public Trainee getTraineeByName(@PathVariable String traineeName) {
 		return repo.findByTraineeName(traineeName);
 	}
