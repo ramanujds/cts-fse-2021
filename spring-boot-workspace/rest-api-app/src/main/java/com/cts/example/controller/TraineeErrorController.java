@@ -15,7 +15,7 @@ import com.cts.example.error.InvalidDobException;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
-@RestControllerAdvice
+//@RestControllerAdvice
 public class TraineeErrorController {
 	
 	
