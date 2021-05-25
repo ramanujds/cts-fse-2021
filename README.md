@@ -25,7 +25,7 @@ installing docker on ec2
 sudo usermod -a -G docker ec2-user
 5. docker  -v
 
-```
+
 Installing Java
 
 sudo amazon-linux-extras install java-openjdk11
@@ -41,5 +41,17 @@ Follow steps from docker-repository
 
 * Modify the inbound rule and add All Port Range dor All Protocol to All
 * Use http rather https
+
+```
+
+__Dockerfile for building image for java application__
+
+```Dockerfile
+
+FROM adoptopenjdk/openjdk11
+WORKDIR /
+ADD truyum-app.jar truyum-app.jar
+EXPOSE 5000
+CMD java -jar truyum-app.jar
 
 ```
