@@ -1,0 +1,17 @@
+zuul:
+  routes:
+    order-service:
+      path: /orders/**
+      service-id: order-service
+      strip-prefix: false
+      
+    product-service:
+      path: /products/**
+      service-id: product-service
+      strip-prefix: false
+     
+     
+    coupon-service:
+      path: /coupons/**
+      service-id: coupon-service
+      strip-prefix: false  
