@@ -106,6 +106,23 @@ docker container run -p 5000:5000 -e RDS_HOSTNAME=mysql-server -e RDS_PORT=3306 
 
 ```
 
+### Running Microservices on Docker
+
+```bash
+
+sudo docker network create microservices-network
+
+sudo docker container run -p 8761:8761 -d --name eureka-server --network=microservices-network eureka-server
+
+sudo docker container run -p 5100:5100  -d -e EUREKA_HOST=eureka-server --name product-service --network=microservices-network product-service
+
+sudo docker container run -p 5200:5200 -d -e EUREKA_HOST=eureka-server --name coupon-service --network=microservices-network coupon-service
+
+sudo docker container run -p 5000:5000 -d -e EUREKA_HOST=eureka-server --name order-service --network=microservices-network order-service
+
+sudo docker container run -p 8888:8888 -d -e EUREKA_HOST=eureka-server --name api-gateway --network=microservices-network api-gateway
+
+```
 
 
 
