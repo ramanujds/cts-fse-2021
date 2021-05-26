@@ -108,7 +108,7 @@ docker container run -p 5000:5000 -e RDS_HOSTNAME=mysql-server -e RDS_PORT=3306 
 
 ### Running Microservices on Docker
 
-```bash
+```text
 
 sudo docker network create microservices-network
 
