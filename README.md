@@ -55,3 +55,58 @@ EXPOSE 5000
 CMD java -jar truyum-app.jar
 
 ```
+
+## Running Spring Boot App with MySql on Docker
+
+* Running Mysql -
+
+```bash
+
+docker run -d -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=cts_db -e MYSQL_USER=docker -e MYSQL_PASSWORD=password -p 3306:3306 --name mysql-server mysql
+
+```
+* Running MySql with Volume - 
+
+```bash
+
+docker run -d -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=cts_db -e MYSQL_USER=docker -e MYSQL_PASSWORD=password -p 3306:3306 --name mysql-server  --volume mysql-db-volume:/var/lib/mysql mysql
+
+```
+
+
+
+* Running Spring Boot App
+
+```bash
+
+docker container run -p 5000:5000 -e RDS_HOSTNAME=mysql-server -e RDS_PORT=3306 --link=mysql-server --name spring-boot-docker spring-boot-docker
+
+```
+
+* Creating Network - 
+
+```bash
+
+docker network create docker-mysql-network
+
+```
+* Running MySql on the Network -
+
+```bash
+
+docker run -d -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=cts_db -e MYSQL_USER=docker -e MYSQL_PASSWORD=password -p 3306:3306 --name mysql-server  --volume mysql-db-volume:/var/lib/mysql --network=docker-mysql-network mysql
+
+```
+
+* Network Based Communication
+
+ ```bash
+
+docker container run -p 5000:5000 -e RDS_HOSTNAME=mysql-server -e RDS_PORT=3306 --name spring-boot-docker --network=docker-mysql-network spring-boot-docker
+
+```
+
+
+
+
+
