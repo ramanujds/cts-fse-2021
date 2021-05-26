@@ -11,6 +11,7 @@
 	<groupId>com.cts.example</groupId>
 	<artifactId>simple-mvc-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>simple-mvc-app</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>

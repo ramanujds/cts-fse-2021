@@ -17,7 +17,7 @@ public class TraineeController {
 
 	@GetMapping("/get-trainee")
 	public String getTrainee(@RequestParam("tid") int id, Model m) {
-		Trainee trainee=rt.getForObject("http://localhost:8500/trainees/"+id, Trainee.class);
+		Trainee trainee=rt.getForObject("http://18.222.150.232:8500/trainees/"+id, Trainee.class);
 		m.addAttribute("trainee", trainee);
 		
 	
@@ -29,7 +29,7 @@ public class TraineeController {
 	@PostMapping("/add-trainee")
 	public String addTrainee(Model m) {
 		Trainee trainee=new Trainee(1005, "Javed");
-		rt.postForObject("http://localhost:8500/trainees",trainee, Trainee.class);
+		rt.postForObject("http://18.222.150.232:8500/trainees",trainee, Trainee.class);
 		m.addAttribute("trainee", trainee);
 		
 	
