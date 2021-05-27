@@ -124,6 +124,133 @@ sudo docker container run -p 8888:8888 -d -e EUREKA_HOST=eureka-server --name ap
 
 ```
 
+### Pushing Images to Docker Hub
 
+__login to docker__
+```bash
+
+docker login
+
+```
+__tagging a image__
+
+```bash
+
+docker tag order-service ram1uj/order-service:0.1
+
+```
+
+__push an image to docker hub__
+
+```bash
+
+docker push ram1uj/order-service:0.1
+
+```
+
+### Installing Docker-compose on EC2:
+
+```bash
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+```
+
+
+### Docker Compose yml -
+
+```yaml
+
+version: '3.7'
+services: 
+   
+    eureka-server:
+        image: ram1uj/eureka-server:0.1
+        ports: 
+            - "8761:8761"
+        restart: always
+       
+        networks:
+            - app-network
+    
+    product-service:
+        image: ram1uj/product-service:0.1
+        ports: 
+            - "5100-5199:5100"
+        restart: always
+        environment:
+            EUREKA_HOST: eureka-server
+                
+        depends_on:
+            - eureka-server
+        networks:
+            - app-network
+ 
+    coupon-service:
+        image: ram1uj/coupon-service:0.1
+        ports: 
+            - "5200-5299:5200"
+        restart: always
+        environment:
+            EUREKA_HOST: eureka-server
+        
+        depends_on:
+            - eureka-server
+        networks:
+            - app-network
+
+    order-service:
+        image: ram1uj/order-service:0.1
+        ports: 
+            - "5000-5099:5000"
+        restart: always
+        environment:
+            EUREKA_HOST: eureka-server
+        depends_on:
+            - eureka-server
+        networks:
+            - app-network
+ 
+# Networks to be created to facilitate communication between containers
+networks:
+    app-network:  
+    
+```
+
+
+### Running with docker compose - 
+
+* Checking the file - 
+
+```bash
+docker-compose config
+```
+* Strating Services - 
+
+```bash 
+
+docker-compose up
+```
+
+* Stopping Services - ctrl+c
+
+* Removing Docker Compose -
+ 
+ ```bash
+ docker-compose down
+```
+
+* Scaling Services -
+
+```bash
+
+docker-compose up --scale product-service=2 --scale coupon-service=3
+
+```
 
 
