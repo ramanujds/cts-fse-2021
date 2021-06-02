@@ -1,6 +1,8 @@
 package com.cts.microservices.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,9 +18,17 @@ public class OrderService {
 	@Autowired
 	RestTemplate rt;
 	
+	@Value("${PRODUCT_SERVICE}")
+	String productServiceUri;
+	
+	@Value("${COUPON_SERVICE}")
+	String couponServiceUri;
+	
+	
+	
 	@HystrixCommand(fallbackMethod = "getProductFallback")
 	public Product getProduct(long productId) {
-		Product product=rt.getForObject("http://PRODUCT-SERVICE/products/product-id/"+productId, Product.class);
+		Product product=rt.getForObject("http://"+productServiceUri+"/products/product-id/"+productId, Product.class);
 		
 		return product;
 	}
@@ -32,7 +42,7 @@ public class OrderService {
 	
 	@HystrixCommand(fallbackMethod = "getCouponFallback")
 	public Coupon getCoupon(String couponCode) {
-		Coupon coupon=rt.getForObject("http://COUPON-SERVICE/coupons/coupon-code/"+couponCode, Coupon.class);
+		Coupon coupon=rt.getForObject("http://"+couponServiceUri+"/coupons/coupon-code/"+couponCode, Coupon.class);
 		
 		return coupon;
 	}
