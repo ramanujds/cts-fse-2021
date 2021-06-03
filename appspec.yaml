@@ -1,0 +1,10 @@
+version: 1.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "arn:aws:ecs:us-east-2:941516478045:task-definition/product-service-lb-taks-dfn:1"
+        LoadBalancerInfo:
+          ContainerName: "product-service"
+          ContainerPort: "5100"
+        PlatformVersion: "LATEST"
