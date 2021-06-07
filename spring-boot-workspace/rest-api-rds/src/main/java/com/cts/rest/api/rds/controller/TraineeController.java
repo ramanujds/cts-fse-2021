@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cts.rest.api.rds.model.Trainee;
 import com.cts.rest.api.rds.repository.TraineeRepo;
 
+import jdk.internal.org.jline.utils.Log;
+import lombok.extern.slf4j.Slf4j;
+
 
 
 @RestController
+@Slf4j
 public class TraineeController {
 	
 	@Autowired
@@ -23,6 +27,7 @@ public class TraineeController {
 
 	@GetMapping("/trainees")
 	public List<Trainee> getAllTrainees(){
+		Log.info("Fetched All Trainees");
 		return repo.findAll();
 	}
 	
