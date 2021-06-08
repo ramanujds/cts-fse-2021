@@ -1,0 +1,28 @@
+server:
+  port: 8000
+  
+TOPIC_NAME: topic-a
+GROUP_ID: group-1
+
+
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: 
+      - 127.0.0.1:9092
+#      key-serializer:
+#        org.apache.kafka.common.serialization.StringSerializer.class
+#      value-serializer:
+#        org.apache.kafka.common.serialization.StringSerializer.class
+#        
+    consumer:
+      bootstrap-servers:
+      - 127.0.0.1:9092
+      group-id: group-1
+      auto-offset-reset: earliest
+      key-deserializer:
+        org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        
+        
+      
