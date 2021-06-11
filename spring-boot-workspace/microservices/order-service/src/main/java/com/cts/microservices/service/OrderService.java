@@ -24,6 +24,9 @@ public class OrderService {
 	@Value("${COUPON_SERVICE}")
 	String couponServiceUri;
 	
+	@Autowired
+	CouponServiceFeignClient couponClient;
+	
 	
 	
 	@HystrixCommand(fallbackMethod = "getProductFallback")
@@ -42,7 +45,9 @@ public class OrderService {
 	
 	@HystrixCommand(fallbackMethod = "getCouponFallback")
 	public Coupon getCoupon(String couponCode) {
-		Coupon coupon=rt.getForObject("http://"+couponServiceUri+"/coupons/coupon-code/"+couponCode, Coupon.class);
+	//	Coupon coupon=rt.getForObject("http://"+couponServiceUri+"/coupons/coupon-code/"+couponCode, Coupon.class);
+		
+		Coupon coupon=couponClient.getCoupon(couponCode);
 		
 		return coupon;
 	}
@@ -54,7 +59,7 @@ public class OrderService {
 	}
 	@HystrixCommand(fallbackMethod = "getOrderFallBack")
 	public Order getOrder(long productId, String couponCode) {
-		Product product=getProduct(productId);
+		Product product=getProductFallback(productId);
 		Coupon coupon=getCoupon(couponCode);
 		double discount=0;
 		if(product.getPrice()>=coupon.getMinAmount()) {

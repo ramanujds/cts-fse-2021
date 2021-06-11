@@ -1,0 +1,13 @@
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 5000
+        logger-level: basic
+
+#    
+#      coupon-service:
+#        connect-timeout: 5000
+#        read-timeout: 5000
+#        logger-level: basic
